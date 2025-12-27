@@ -22,7 +22,7 @@ class TennisGame1(TennisGameInterface):
     def score(self):
         result = ""
         temp_score = 0
-        if self.player1_score == self.player2_score:
+        if self._is_deuce():
             result = {
                 0: "Love-All",
                 1: "Fifteen-All",
@@ -52,3 +52,9 @@ class TennisGame1(TennisGameInterface):
                     3: "Forty",
                 }[temp_score]
         return result
+
+    def _is_deuce(self) -> bool:
+        """
+        Returns True if the players are tied, False otherwise.
+        """
+        return self.player1_score == self.player2_score
