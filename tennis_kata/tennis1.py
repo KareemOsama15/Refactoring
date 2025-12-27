@@ -24,7 +24,7 @@ class TennisGame1(TennisGameInterface):
         temp_score = 0
         if self._is_deuce():
             result = self._handle_deuce(self.player1_score)
-        elif self.player1_score >= 4 or self.player2_score >= 4:
+        elif self._has_advantage():
             minus_result = self.player1_score - self.player2_score
             if minus_result == 1:
                 result = "Advantage player1"
@@ -56,8 +56,17 @@ class TennisGame1(TennisGameInterface):
         return self.player1_score == self.player2_score
 
     def _handle_deuce(self, score: int) -> str:
+        """
+        Returns the score for the players if they are tied.
+        """
         return {
-                0: "Love-All",
-                1: "Fifteen-All",
-                2: "Thirty-All",
-            }.get(score, "Deuce")
+            0: "Love-All",
+            1: "Fifteen-All",
+            2: "Thirty-All",
+        }.get(score, "Deuce")
+
+    def _has_advantage(self) -> bool:
+        """
+        Returns True if the player has advantage, False otherwise.
+        """
+        return self.player1_score >= 4 or self.player2_score >= 4
