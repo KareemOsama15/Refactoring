@@ -3,10 +3,14 @@ from typing import Dict, Callable
 
 
 class TennisGame1(TennisGameInterface):
+    """
+    Implementation of the TennisGameInterface.
+    """
+
     def __init__(self, player1_name: str, player2_name: str) -> None:
         super().__init__(player1_name, player2_name)
 
-    def won_point(self, player_name: str):
+    def won_point(self, player_name: str) -> None:
         """
         Increments the score of the player based on the player_name.
         """
@@ -19,15 +23,16 @@ class TennisGame1(TennisGameInterface):
             raise ValueError(f"Invalid player name: {player_name}")
         player_score_updater()
 
-    def score(self):
-        result = ""
+    def score(self) -> str:
+        """
+        Returns the score for the players.
+        """
         if self._is_deuce():
-            result = self._handle_deuce(self.player1_score)
+            return self._handle_deuce(self.player1_score)
         elif self._has_advantage():
-            result = self._handle_player_has_advantage()
-        else:
-            result = self._handle_normal_score()
-        return result
+            return self._handle_player_has_advantage()
+
+        return self._handle_normal_score()
 
     def _is_deuce(self) -> bool:
         """
