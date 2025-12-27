@@ -5,10 +5,14 @@ class TennisGame1(TennisGameInterface):
         super().__init__(player1_name, player2_name)
 
     def won_point(self, player_name):
-        if player_name == "player1":
-            self.player1_score += 1
-        else:
-            self.player2_score += 1
+        """
+        Increments the score of the player based on the player_name.
+        """
+        map_player_name_to_score = {
+            "player1": self.player1_score,
+            "player2": self.player2_score,
+        }
+        map_player_name_to_score[player_name] += 1
 
     def score(self):
         result = ""
