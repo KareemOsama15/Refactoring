@@ -7,8 +7,10 @@ class TennisGameInterface(ABC):
     """
 
     def __init__(self, player1_name: str, player2_name: str) -> None:
-        self.player1_name = player1_name
-        self.player2_name = player2_name
+        self.player1_name: str = player1_name
+        self.player2_name: str = player2_name
+        self.player1_score: int = 0
+        self.player2_score: int = 0
 
     @abstractmethod
     def won_point(self, player_name: str) -> None:
