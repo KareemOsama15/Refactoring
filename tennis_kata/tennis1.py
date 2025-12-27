@@ -25,15 +25,7 @@ class TennisGame1(TennisGameInterface):
         if self._is_deuce():
             result = self._handle_deuce(self.player1_score)
         elif self._has_advantage():
-            minus_result = self.player1_score - self.player2_score
-            if minus_result == 1:
-                result = "Advantage player1"
-            elif minus_result == -1:
-                result = "Advantage player2"
-            elif minus_result >= 2:
-                result = "Win for player1"
-            else:
-                result = "Win for player2"
+            result = self._handle_player_has_advantage()
         else:
             for i in range(1, 3):
                 if i == 1:
@@ -70,3 +62,18 @@ class TennisGame1(TennisGameInterface):
         Returns True if the player has advantage, False otherwise.
         """
         return self.player1_score >= 4 or self.player2_score >= 4
+
+    def _handle_player_has_advantage(self) -> str:
+        """
+        Returns the score for the player who has advantage.
+        """
+        minus_result = self.player1_score - self.player2_score
+        if minus_result == 1:
+            result = "Advantage player1"
+        elif minus_result == -1:
+            result = "Advantage player2"
+        elif minus_result >= 2:
+            result = "Win for player1"
+        else:
+            result = "Win for player2"
+        return result
