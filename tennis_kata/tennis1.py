@@ -1,4 +1,6 @@
 from tennis_interface import TennisGameInterface
+from typing import Dict, Callable
+
 
 class TennisGame1(TennisGameInterface):
     def __init__(self, player1_name: str, player2_name: str) -> None:
@@ -8,11 +10,14 @@ class TennisGame1(TennisGameInterface):
         """
         Increments the score of the player based on the player_name.
         """
-        map_player_name_to_score = {
-            "player1": self.player1_score,
-            "player2": self.player2_score,
+        score_updaters: Dict[str, Callable[[], None]] = {
+            "player1": lambda: setattr(self, "player1_score", self.player1_score + 1),
+            "player2": lambda: setattr(self, "player2_score", self.player2_score + 1),
         }
-        map_player_name_to_score[player_name] += 1
+        player_score_updater = score_updaters.get(player_name)
+        if player_score_updater is None:
+            raise ValueError(f"Invalid player name: {player_name}")
+        player_score_updater()
 
     def score(self):
         result = ""
