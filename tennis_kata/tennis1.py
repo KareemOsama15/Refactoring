@@ -21,7 +21,6 @@ class TennisGame1(TennisGameInterface):
 
     def score(self):
         result = ""
-        temp_score = 0
         if self._is_deuce():
             result = self._handle_deuce(self.player1_score)
         elif self._has_advantage():
@@ -71,17 +70,16 @@ class TennisGame1(TennisGameInterface):
         Returns the score for the players if they are not tied or have advantage.
         """
         result: str = ""
-        temp_score = 0
+        map_score_to_result: Dict[int, str] = {
+            0: "Love",
+            1: "Fifteen",
+            2: "Thirty",
+            3: "Forty",
+        }
         for i in range(1, 3):
-            if i == 1:
-                temp_score = self.player1_score
-            else:
+            if i != 1:
                 result += "-"
-                temp_score = self.player2_score
-            result += {
-                0: "Love",
-                1: "Fifteen",
-                2: "Thirty",
-                3: "Forty",
-            }[temp_score]
+
+            temp_score = self.player1_score if i == 1 else self.player2_score
+            result += map_score_to_result.get(temp_score)
         return result
