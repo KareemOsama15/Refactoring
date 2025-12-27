@@ -14,8 +14,8 @@ class TennisGame1(TennisGameInterface):
             "player1": lambda: setattr(self, "player1_score", self.player1_score + 1),
             "player2": lambda: setattr(self, "player2_score", self.player2_score + 1),
         }
-        player_score_updater = score_updaters.get(player_name)
-        if player_score_updater is None:
+        player_score_updater = score_updaters.get(player_name, None)
+        if not player_score_updater:
             raise ValueError(f"Invalid player name: {player_name}")
         player_score_updater()
 
