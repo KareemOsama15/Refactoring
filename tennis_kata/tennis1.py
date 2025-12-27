@@ -6,7 +6,7 @@ class TennisGame1(TennisGameInterface):
     def __init__(self, player1_name: str, player2_name: str) -> None:
         super().__init__(player1_name, player2_name)
 
-    def won_point(self, player_name):
+    def won_point(self, player_name: str):
         """
         Increments the score of the player based on the player_name.
         """
@@ -23,11 +23,7 @@ class TennisGame1(TennisGameInterface):
         result = ""
         temp_score = 0
         if self._is_deuce():
-            result = {
-                0: "Love-All",
-                1: "Fifteen-All",
-                2: "Thirty-All",
-            }.get(self.player1_score, "Deuce")
+            result = self._handle_deuce(self.player1_score)
         elif self.player1_score >= 4 or self.player2_score >= 4:
             minus_result = self.player1_score - self.player2_score
             if minus_result == 1:
@@ -58,3 +54,10 @@ class TennisGame1(TennisGameInterface):
         Returns True if the players are tied, False otherwise.
         """
         return self.player1_score == self.player2_score
+
+    def _handle_deuce(self, score: int) -> str:
+        return {
+                0: "Love-All",
+                1: "Fifteen-All",
+                2: "Thirty-All",
+            }.get(score, "Deuce")
