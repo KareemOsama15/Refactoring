@@ -65,15 +65,14 @@ class TennisGame1(TennisGameInterface):
 
     def _handle_player_has_advantage(self) -> str:
         """
-        Returns the score for the player who has advantage.
+        Returns the result based on the score for the player who has advantage.
         """
-        minus_result = self.player1_score - self.player2_score
-        if minus_result == 1:
-            result = "Advantage player1"
-        elif minus_result == -1:
-            result = "Advantage player2"
-        elif minus_result >= 2:
-            result = "Win for player1"
-        else:
-            result = "Win for player2"
-        return result
+        diff_score: int = self.player1_score - self.player2_score
+        if diff_score == 1:
+            return "Advantage player1"
+        elif diff_score == -1:
+            return "Advantage player2"
+        elif diff_score >= 2:
+            return "Win for player1"
+
+        return "Win for player2"
