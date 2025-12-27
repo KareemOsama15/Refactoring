@@ -27,18 +27,7 @@ class TennisGame1(TennisGameInterface):
         elif self._has_advantage():
             result = self._handle_player_has_advantage()
         else:
-            for i in range(1, 3):
-                if i == 1:
-                    temp_score = self.player1_score
-                else:
-                    result += "-"
-                    temp_score = self.player2_score
-                result += {
-                    0: "Love",
-                    1: "Fifteen",
-                    2: "Thirty",
-                    3: "Forty",
-                }[temp_score]
+            result = self._handle_normal_score()
         return result
 
     def _is_deuce(self) -> bool:
@@ -76,3 +65,23 @@ class TennisGame1(TennisGameInterface):
             return "Win for player1"
 
         return "Win for player2"
+
+    def _handle_normal_score(self) -> str:
+        """
+        Returns the score for the players if they are not tied or have advantage.
+        """
+        result: str = ""
+        temp_score = 0
+        for i in range(1, 3):
+            if i == 1:
+                temp_score = self.player1_score
+            else:
+                result += "-"
+                temp_score = self.player2_score
+            result += {
+                0: "Love",
+                1: "Fifteen",
+                2: "Thirty",
+                3: "Forty",
+            }[temp_score]
+        return result
