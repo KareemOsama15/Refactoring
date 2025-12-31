@@ -1,12 +1,12 @@
 import unittest
 
-from tennis1 import TennisGame1
-from tennis2 import TennisGame2
-from tennis3 import TennisGame3
-from tennis4 import TennisGame4
-from tennis5 import TennisGame5
-from tennis6 import TennisGame6
-from tennis7 import TennisGame7
+from before.tennis1 import TennisGame1
+from before.tennis2 import TennisGame2
+from before.tennis3 import TennisGame3
+from before.tennis4 import TennisGame4
+from before.tennis5 import TennisGame5
+from before.tennis6 import TennisGame6
+from before.tennis7 import TennisGame7
 
 test_cases = [
     (0, 0, "Love-All", "player1", "player2"),
