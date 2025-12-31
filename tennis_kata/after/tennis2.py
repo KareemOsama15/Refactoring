@@ -11,15 +11,15 @@ class TennisGame2(TennisGameInterface):
         Updates the score for the player who won the point.
         """
         score_updaters: Dict[str, Callable] = {
-            "player1": self.p1_score,
-            "player2": self.p2_score
-        } 
+            "player1": self._increase_player1_score,
+            "player2": self._increase_player2_score,
+        }
         run_update_score = score_updaters.get(player_name)
         if not run_update_score:
             raise ValueError(f"Invalid player name: {player_name}")
-        
+
         run_update_score()
-       
+
     def score(self):
         result = ""
         if self.player1_score == self.player2_score and self.player1_score < 3:
@@ -98,15 +98,15 @@ class TennisGame2(TennisGameInterface):
         return result
 
     def set_p1_score(self, number):
-        for i in range(number):
-            self.p1_score()
+        for _ in range(number):
+            self._increase_player1_score()
 
     def set_p2_score(self, number):
-        for i in range(number):
-            self.p2_score()
+        for _ in range(number):
+            self._increase_player2_score()
 
-    def p1_score(self):
+    def _increase_player1_score(self):
         self.player1_score += 1
 
-    def p2_score(self):
+    def _increase_player2_score(self):
         self.player2_score += 1
