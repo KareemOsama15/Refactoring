@@ -1,4 +1,4 @@
-from tennis_interface import TennisGameInterface
+from .tennis_interface import TennisGameInterface
 from typing import Dict, Callable
 
 
