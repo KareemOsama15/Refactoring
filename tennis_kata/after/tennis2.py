@@ -1,16 +1,25 @@
 from .tennis_interface import TennisGameInterface
+from typing import Dict, Callable
 
 
 class TennisGame2(TennisGameInterface):
     def __init__(self, player1_name, player2_name):
         super().__init__(player1_name, player2_name)
 
-    def won_point(self, player_name):
-        if player_name == "player1":
-            self.p1_score()
-        else:
-            self.p2_score()
-
+    def won_point(self, player_name) -> None:
+        """
+        Updates the score for the player who won the point.
+        """
+        score_updaters: Dict[str, Callable] = {
+            "player1": self.p1_score,
+            "player2": self.p2_score
+        } 
+        run_update_score = score_updaters.get(player_name)
+        if not run_update_score:
+            raise ValueError(f"Invalid player name: {player_name}")
+        
+        run_update_score()
+       
     def score(self):
         result = ""
         if self.player1_score == self.player2_score and self.player1_score < 3:
