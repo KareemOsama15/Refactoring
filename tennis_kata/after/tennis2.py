@@ -23,7 +23,7 @@ class TennisGame2(TennisGameInterface):
     def score(self):
         result = ""
         if self._are_players_tied():
-            if self.player1_score < 3:
+            if self._is_score_higher_than_3():
                 if self.player1_score == 0:
                     result = "Love"
                 if self.player1_score == 1:
@@ -121,3 +121,6 @@ class TennisGame2(TennisGameInterface):
 
     def _get_deuce_result(self) -> str:
         return "Deuce"
+
+    def _is_score_higher_than_3(self) -> bool:
+        return self.player1_score < 3
