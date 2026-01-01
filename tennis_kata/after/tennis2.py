@@ -25,12 +25,14 @@ class TennisGame2(TennisGameInterface):
         if self._are_players_tied():
             if self._is_score_higher_than_3():
                 result = self._get_tied_score_result(self.player1_score)
-            
+
             elif self._is_deuce():
                 result = self._get_deuce_result()
 
         p1res = ""
         p2res = ""
+
+        # Case 1: Player 1 is scoring, Player 2 at Love (0)
         if self.player1_score > 0 and self.player2_score == 0:
             if self.player1_score == 1:
                 p1res = "Fifteen"
@@ -38,9 +40,10 @@ class TennisGame2(TennisGameInterface):
                 p1res = "Thirty"
             if self.player1_score == 3:
                 p1res = "Forty"
-
             p2res = "Love"
             result = p1res + "-" + p2res
+
+        # Case 2: Player 2 is scoring, Player 1 at Love (0)
         if self.player2_score > 0 and self.player1_score == 0:
             if self.player2_score == 1:
                 p2res = "Fifteen"
@@ -48,10 +51,10 @@ class TennisGame2(TennisGameInterface):
                 p2res = "Thirty"
             if self.player2_score == 3:
                 p2res = "Forty"
-
             p1res = "Love"
             result = p1res + "-" + p2res
 
+        # Case 3: Both players have scored, Player 1 is leading but no one has won yet
         if self.player1_score > self.player2_score and self.player1_score < 4:
             if self.player1_score == 2:
                 p1res = "Thirty"
@@ -62,6 +65,8 @@ class TennisGame2(TennisGameInterface):
             if self.player2_score == 2:
                 p2res = "Thirty"
             result = p1res + "-" + p2res
+
+        # Case 4: Both players have scored, Player 2 is leading but no one has won yet
         if self.player2_score > self.player1_score and self.player2_score < 4:
             if self.player2_score == 2:
                 p2res = "Thirty"
@@ -73,24 +78,30 @@ class TennisGame2(TennisGameInterface):
                 p1res = "Thirty"
             result = p1res + "-" + p2res
 
+        # Case 5: Advantage to Player 1 (deuce situation)
         if self.player1_score > self.player2_score and self.player2_score >= 3:
             result = "Advantage player1"
 
+        # Case 6: Advantage to Player 2 (deuce situation)
         if self.player2_score > self.player1_score and self.player1_score >= 3:
             result = "Advantage player2"
 
+        # Case 7: Player 1 wins the game (with at least 4 points and 2 points ahead)
         if (
             self.player1_score >= 4
             and self.player2_score >= 0
             and (self.player1_score - self.player2_score) >= 2
         ):
             result = "Win for player1"
+
+        # Case 8: Player 2 wins the game (with at least 4 points and 2 points ahead)
         if (
             self.player2_score >= 4
             and self.player1_score >= 0
             and (self.player2_score - self.player1_score) >= 2
         ):
             result = "Win for player2"
+
         return result
 
     def set_p1_score(self, number):
