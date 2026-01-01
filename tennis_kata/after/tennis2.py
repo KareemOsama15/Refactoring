@@ -21,6 +21,7 @@ class TennisGame2(TennisGameInterface):
         run_update_score()
 
     def score(self):
+        """Returns the score for the players."""
         result = ""
         if self._are_players_tied():
             if self._is_score_higher_than_3():
@@ -113,24 +114,31 @@ class TennisGame2(TennisGameInterface):
             self._increase_player2_score()
 
     def _increase_player1_score(self):
+        """Increases the score for player 1."""
         self.player1_score += 1
 
     def _increase_player2_score(self):
+        """Increases the score for player 2."""
         self.player2_score += 1
 
     def _are_players_tied(self):
+        """Returns True if the scores are tied, False otherwise."""
         return self.player1_score == self.player2_score
 
     def _is_deuce(self) -> bool:
+        """Returns True if the scores are deuce, False otherwise."""
         return self.player1_score > 2 and self.player1_score == self.player2_score
 
     def _get_deuce_result(self) -> str:
+        """Returns the result for the deuce situation."""
         return "Deuce"
 
     def _is_score_higher_than_3(self) -> bool:
+        """Returns True if the score is higher than 3, False otherwise."""
         return self.player1_score < 3
 
     def _get_tied_score_result(self, score: int) -> str:
+        """Returns the result for the tied score situation."""
         result = {
             0: "Love",
             1: "Fifteen",
