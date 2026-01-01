@@ -35,25 +35,13 @@ class TennisGame2(TennisGameInterface):
 
         # Case 1: Player 1 is scoring, Player 2 at Love (0)
         if self._is_player1_scoring_and_player2_at_love():
-            if self.player1_score == 1:
-                p1res = "Fifteen"
-            if self.player1_score == 2:
-                p1res = "Thirty"
-            if self.player1_score == 3:
-                p1res = "Forty"
-            p2res = "Love"
+            p1res, p2res = self._get_result_for_player_scoring(self.player1_score)
             result = p1res + "-" + p2res
 
         # Case 2: Player 2 is scoring, Player 1 at Love (0)
-        if self.player2_score > 0 and self.player1_score == 0:
-            if self.player2_score == 1:
-                p2res = "Fifteen"
-            if self.player2_score == 2:
-                p2res = "Thirty"
-            if self.player2_score == 3:
-                p2res = "Forty"
-            p1res = "Love"
-            result = p1res + "-" + p2res
+        if self._is_player2_scoring_and_player1_at_love():
+            p2res, p1res = self._get_result_for_player_scoring(self.player2_score)
+            result = p2res + "-" + p1res
 
         # Case 3: Both players have scored, Player 1 is leading but no one has won yet
         if self.player1_score > self.player2_score and self.player1_score < 4:
@@ -147,4 +135,20 @@ class TennisGame2(TennisGameInterface):
         return result + "-All"
 
     def _is_player1_scoring_and_player2_at_love(self) -> bool:
+        """Returns True if player 1 is scoring and player 2 is at love, False otherwise."""
         return self.player1_score > 0 and self.player2_score == 0
+
+    def _is_player2_scoring_and_player1_at_love(self) -> bool:
+        """Returns True if player 2 is scoring and player 1 is at love, False otherwise."""
+        return self.player2_score > 0 and self.player1_score == 0
+
+    def _get_result_for_player_scoring(self, player_score: int) -> tuple[str, str]:
+        """Returns the result for the player scoring situation."""
+        result_dict: Dict[int, str] = {
+            1: "Fifteen",
+            2: "Thirty",
+            3: "Forty",
+        }
+        leading_player_result: str = result_dict.get(player_score, "")
+        trailing_player_result: str = "Love"
+        return leading_player_result, trailing_player_result
