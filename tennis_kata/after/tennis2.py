@@ -34,7 +34,7 @@ class TennisGame2(TennisGameInterface):
         p2res = ""
 
         # Case 1: Player 1 is scoring, Player 2 at Love (0)
-        if self.player1_score > 0 and self.player2_score == 0:
+        if self._is_player1_scoring_and_player2_at_love():
             if self.player1_score == 1:
                 p1res = "Fifteen"
             if self.player1_score == 2:
@@ -145,3 +145,6 @@ class TennisGame2(TennisGameInterface):
             2: "Thirty",
         }.get(score)
         return result + "-All"
+
+    def _is_player1_scoring_and_player2_at_love(self) -> bool:
+        return self.player1_score > 0 and self.player2_score == 0
