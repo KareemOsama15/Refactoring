@@ -9,6 +9,7 @@ RESULT_MAP = {
     3: "Forty",
 }
 
+
 class TennisGame2(TennisGameInterface):
     def __init__(self, player1_name, player2_name):
         super().__init__(player1_name, player2_name)
@@ -81,14 +82,6 @@ class TennisGame2(TennisGameInterface):
             result = self._get_player_win_result(self.player2_name)
 
         return result
-
-    def set_p1_score(self, number):
-        for _ in range(number):
-            self._increase_player1_score()
-
-    def set_p2_score(self, number):
-        for _ in range(number):
-            self._increase_player2_score()
 
     def _increase_player1_score(self):
         """Increases the score for player 1."""
