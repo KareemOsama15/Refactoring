@@ -67,11 +67,11 @@ class TennisGame2(TennisGameInterface):
 
         # Case 7: Player 1 wins the game (with at least 4 points and 2 points ahead)
         if self._is_player1_has_win():
-            result = "Win for player1"
+            result = self._get_player_win_result(self.player1_name)
 
         # Case 8: Player 2 wins the game (with at least 4 points and 2 points ahead)
         if self._is_player2_has_win():
-            result = "Win for player2"
+            result = self._get_player_win_result(self.player2_name)
 
         return result
 
@@ -183,3 +183,7 @@ class TennisGame2(TennisGameInterface):
             and self.player1_score >= 0
             and (self.player2_score - self.player1_score) >= 2
         )
+
+    def _get_player_win_result(self, player_name: str) -> str:
+        """Returns the result for the player win situation."""
+        return f"Win for {player_name}"
