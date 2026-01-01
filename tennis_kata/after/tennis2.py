@@ -32,8 +32,8 @@ class TennisGame2(TennisGameInterface):
                     result = "Thirty"
                 result += "-All"
             
-            elif self.player1_score > 2:
-                result = "Deuce"
+            elif self._is_deuce():
+                result = self._get_deuce_result()
 
         p1res = ""
         p2res = ""
@@ -115,3 +115,9 @@ class TennisGame2(TennisGameInterface):
 
     def _are_players_tied(self):
         return self.player1_score == self.player2_score
+
+    def _is_deuce(self) -> bool:
+        return self.player1_score > 2 and self.player1_score == self.player2_score
+
+    def _get_deuce_result(self) -> str:
+        return "Deuce"
