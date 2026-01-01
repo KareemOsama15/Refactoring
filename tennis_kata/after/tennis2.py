@@ -52,14 +52,9 @@ class TennisGame2(TennisGameInterface):
 
         # Case 4: Both players have scored, Player 2 is leading but no one has won yet
         if self._is_player2_at_lead():
-            if self.player2_score == 2:
-                p2res = "Thirty"
-            if self.player2_score == 3:
-                p2res = "Forty"
-            if self.player1_score == 1:
-                p1res = "Fifteen"
-            if self.player1_score == 2:
-                p1res = "Thirty"
+            p1res, p2res = self._get_result_for_players_at_lead(
+                self.player1_score, self.player2_score
+            )
             result = p1res + "-" + p2res
 
         # Case 5: Advantage to Player 1 (deuce situation)
