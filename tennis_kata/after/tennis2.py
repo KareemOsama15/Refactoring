@@ -44,7 +44,7 @@ class TennisGame2(TennisGameInterface):
             result = p2res + "-" + p1res
 
         # Case 3: Both players have scored, Player 1 is leading but no one has won yet
-        if self.player1_score > self.player2_score and self.player1_score < 4:
+        if self._is_player1_at_lead():
             if self.player1_score == 2:
                 p1res = "Thirty"
             if self.player1_score == 3:
@@ -56,7 +56,7 @@ class TennisGame2(TennisGameInterface):
             result = p1res + "-" + p2res
 
         # Case 4: Both players have scored, Player 2 is leading but no one has won yet
-        if self.player2_score > self.player1_score and self.player2_score < 4:
+        if self._is_player2_at_lead():
             if self.player2_score == 2:
                 p2res = "Thirty"
             if self.player2_score == 3:
@@ -152,3 +152,12 @@ class TennisGame2(TennisGameInterface):
         leading_player_result: str = result_dict.get(player_score, "")
         trailing_player_result: str = "Love"
         return leading_player_result, trailing_player_result
+
+    def _is_player1_at_lead(self) -> bool:
+        """Returns True if player 1 is leading, False otherwise."""
+        return self.player1_score > self.player2_score and self.player1_score < 4
+
+    def _is_player2_at_lead(self) -> bool:
+        """Returns True if player 2 is leading, False otherwise."""
+        return self.player2_score > self.player1_score and self.player2_score < 4
+
