@@ -35,24 +35,19 @@ class TennisGame2(TennisGameInterface):
 
         # Case 1: Player 1 is scoring, Player 2 at Love (0)
         if self._is_player1_scoring_and_player2_at_love():
-            p1res, p2res = self._get_result_for_player_scoring(self.player1_score)
+            p1res, p2res = self._get_result_for_players_scoring(self.player1_score)
             result = p1res + "-" + p2res
 
         # Case 2: Player 2 is scoring, Player 1 at Love (0)
         if self._is_player2_scoring_and_player1_at_love():
-            p2res, p1res = self._get_result_for_player_scoring(self.player2_score)
+            p2res, p1res = self._get_result_for_players_scoring(self.player2_score)
             result = p2res + "-" + p1res
 
         # Case 3: Both players have scored, Player 1 is leading but no one has won yet
         if self._is_player1_at_lead():
-            if self.player1_score == 2:
-                p1res = "Thirty"
-            if self.player1_score == 3:
-                p1res = "Forty"
-            if self.player2_score == 1:
-                p2res = "Fifteen"
-            if self.player2_score == 2:
-                p2res = "Thirty"
+            p1res, p2res = self._get_result_for_players_at_lead(
+                self.player1_score, self.player2_score
+            )
             result = p1res + "-" + p2res
 
         # Case 4: Both players have scored, Player 2 is leading but no one has won yet
@@ -142,8 +137,8 @@ class TennisGame2(TennisGameInterface):
         """Returns True if player 2 is scoring and player 1 is at love, False otherwise."""
         return self.player2_score > 0 and self.player1_score == 0
 
-    def _get_result_for_player_scoring(self, player_score: int) -> tuple[str, str]:
-        """Returns the result for the player scoring situation."""
+    def _get_result_for_players_scoring(self, player_score: int) -> tuple[str, str]:
+        """Returns the result for the players scoring situation."""
         result_dict: Dict[int, str] = {
             1: "Fifteen",
             2: "Thirty",
@@ -161,3 +156,16 @@ class TennisGame2(TennisGameInterface):
         """Returns True if player 2 is leading, False otherwise."""
         return self.player2_score > self.player1_score and self.player2_score < 4
 
+    def _get_result_for_players_at_lead(
+        self, leading_player_score: int, late_player_score: int
+    ) -> tuple[str, str]:
+        """Returns the result for the players at lead situation."""
+        result_dict: Dict[int, str] = {
+            0: "Love",
+            1: "Fifteen",
+            2: "Thirty",
+            3: "Forty",
+        }
+        player_at_lead_result: str = result_dict.get(leading_player_score, "")
+        late_player_result: str = result_dict.get(late_player_score, "")
+        return player_at_lead_result, late_player_result
