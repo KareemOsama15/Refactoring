@@ -22,16 +22,18 @@ class TennisGame2(TennisGameInterface):
 
     def score(self):
         result = ""
-        if self.player1_score == self.player2_score and self.player1_score < 3:
-            if self.player1_score == 0:
-                result = "Love"
-            if self.player1_score == 1:
-                result = "Fifteen"
-            if self.player1_score == 2:
-                result = "Thirty"
-            result += "-All"
-        if self.player1_score == self.player2_score and self.player1_score > 2:
-            result = "Deuce"
+        if self.player1_score == self.player2_score:
+            if self.player1_score < 3:
+                if self.player1_score == 0:
+                    result = "Love"
+                if self.player1_score == 1:
+                    result = "Fifteen"
+                if self.player1_score == 2:
+                    result = "Thirty"
+                result += "-All"
+            
+            elif self.player1_score > 2:
+                result = "Deuce"
 
         p1res = ""
         p2res = ""
