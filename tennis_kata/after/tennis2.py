@@ -24,13 +24,7 @@ class TennisGame2(TennisGameInterface):
         result = ""
         if self._are_players_tied():
             if self._is_score_higher_than_3():
-                if self.player1_score == 0:
-                    result = "Love"
-                if self.player1_score == 1:
-                    result = "Fifteen"
-                if self.player1_score == 2:
-                    result = "Thirty"
-                result += "-All"
+                result = self._get_tied_score_result(self.player1_score)
             
             elif self._is_deuce():
                 result = self._get_deuce_result()
@@ -124,3 +118,11 @@ class TennisGame2(TennisGameInterface):
 
     def _is_score_higher_than_3(self) -> bool:
         return self.player1_score < 3
+
+    def _get_tied_score_result(self, score: int) -> str:
+        result = {
+            0: "Love",
+            1: "Fifteen",
+            2: "Thirty",
+        }.get(score)
+        return result + "-All"
