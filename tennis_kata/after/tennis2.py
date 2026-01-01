@@ -38,32 +38,36 @@ class TennisGame2(TennisGameInterface):
             elif self._is_deuce():
                 return self._get_deuce_result()
 
-        p1res = ""
-        p2res = ""
+        player1_result = ""
+        player2_result = ""
 
         # Case 1: Player 1 is scoring, Player 2 at Love (0)
         if self._is_player1_scoring_and_player2_at_love():
-            p1res, p2res = self._get_result_for_players_scoring(self.player1_score)
-            result = p1res + "-" + p2res
+            player1_result, player2_result = self._get_result_for_players_scoring(
+                self.player1_score
+            )
+            result = player1_result + "-" + player2_result
 
         # Case 2: Player 2 is scoring, Player 1 at Love (0)
         if self._is_player2_scoring_and_player1_at_love():
-            p2res, p1res = self._get_result_for_players_scoring(self.player2_score)
-            result = p2res + "-" + p1res
+            player2_result, player1_result = self._get_result_for_players_scoring(
+                self.player2_score
+            )
+            result = player2_result + "-" + player1_result
 
         # Case 3: Both players have scored, Player 1 is leading but no one has won yet
         if self._is_player1_at_lead():
-            p1res, p2res = self._get_result_for_players_at_lead(
+            player1_result, player2_result = self._get_result_for_players_at_lead(
                 self.player1_score, self.player2_score
             )
-            result = p1res + "-" + p2res
+            result = player1_result + "-" + player2_result
 
         # Case 4: Both players have scored, Player 2 is leading but no one has won yet
         if self._is_player2_at_lead():
-            p1res, p2res = self._get_result_for_players_at_lead(
+            player1_result, player2_result = self._get_result_for_players_at_lead(
                 self.player1_score, self.player2_score
             )
-            result = p1res + "-" + p2res
+            result = player1_result + "-" + player2_result
 
         # Case 5: Advantage to Player 1 (deuce situation)
         if self._is_player1_has_advantage():
