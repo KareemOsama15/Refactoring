@@ -33,10 +33,10 @@ class TennisGame2(TennisGameInterface):
         result = ""
         if self._are_players_tied():
             if self._is_score_higher_than_3():
-                result = self._get_tied_score_result(self.player1_score)
+                return self._get_tied_score_result(self.player1_score)
 
             elif self._is_deuce():
-                result = self._get_deuce_result()
+                return self._get_deuce_result()
 
         p1res = ""
         p2res = ""
