@@ -59,11 +59,11 @@ class TennisGame2(TennisGameInterface):
 
         # Case 5: Advantage to Player 1 (deuce situation)
         if self._is_player1_has_advantage():
-            result = "Advantage player1"
+            result = self._get_player_advantage_result(self.player1_name)
 
         # Case 6: Advantage to Player 2 (deuce situation)
         if self._is_player2_has_advantage():
-            result = "Advantage player2"
+            result = self._get_player_advantage_result(self.player2_name)
 
         # Case 7: Player 1 wins the game (with at least 4 points and 2 points ahead)
         if (
@@ -172,3 +172,7 @@ class TennisGame2(TennisGameInterface):
     def _is_player2_has_advantage(self) -> bool:
         """Returns True if player 2 has advantage, False otherwise."""
         return self.player2_score > self.player1_score and self.player1_score >= 3
+
+    def _get_player_advantage_result(self, player_name: str) -> str:
+        """Returns the result for the player advantage situation."""
+        return f"Advantage {player_name}"
