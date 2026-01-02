@@ -96,7 +96,7 @@ class TennisGame2(TennisGameInterface):
         """Handles the case when players are tied."""
         if score >= 3:
             return "Deuce"
-        return self._get_tied_score_result(score)
+        return TennisGame2.RESULT_MAP.get(score) + "-All"
 
     def _get_tied_score_result(self, score: int) -> str:
         """Returns the result for the tied score situation."""
