@@ -90,10 +90,14 @@ class TennisGame2(TennisGameInterface):
         )
         return f"Advantage {leader}"
 
+    def _is_player_at_lead(self) -> bool:
+        """Returns True if a player is at lead, False otherwise."""
+        return self.player1_score < 4 or self.player2_score < 4
+
     def _get_regular_score(self) -> str:
         """Returns the regular score format."""
         diff_score = self.player1_score - self.player2_score
-        if abs(diff_score) > 0 and (self.player1_score < 4 or self.player2_score < 4):
+        if abs(diff_score) > 0 and self._is_player_at_lead():
             return self._handle_player_at_lead()
 
     def _handle_player_at_lead(self) -> str:
