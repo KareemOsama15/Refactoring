@@ -90,9 +90,6 @@ class TennisGame2(TennisGameInterface):
 
         # Handle case where one player is ahead but not by enough to win
         if abs(diff_score) > 0 and self._is_player_at_lead():
-            return self._handle_player_at_lead()
-
-    def _handle_player_at_lead(self) -> str:
-        player1_score_result = TennisGame2.RESULT_MAP.get(self.player1_score, "")
-        player2_score_result = TennisGame2.RESULT_MAP.get(self.player2_score, "")
-        return f"{player1_score_result}-{player2_score_result}"
+            player1_score_result = TennisGame2.RESULT_MAP.get(self.player1_score, "")
+            player2_score_result = TennisGame2.RESULT_MAP.get(self.player2_score, "")
+            return f"{player1_score_result}-{player2_score_result}"
