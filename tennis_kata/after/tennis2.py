@@ -34,9 +34,9 @@ class TennisGame2(TennisGameInterface):
         if self._are_players_tied():
             return self._handle_tied_scores(self.player1_score)
 
-        # Case 2: A player has won (at least 4 points and 2 points ahead)
-        if self._is_player_win():
-            return self._get_endgame_score()
+        # Case 2: A player is going to win (at least 4 points and 2 points ahead)
+        if self._is_player_going_to_win():
+            return self._check_endgame_score()
 
         # Case 3: Regular scoring (neither player has won yet)
         return self._get_regular_score()
@@ -59,36 +59,17 @@ class TennisGame2(TennisGameInterface):
             return "Deuce"
         return TennisGame2.RESULT_MAP.get(score) + "-All"
 
-    def _is_player1_has_advantage(self) -> bool:
-        """Returns True if player 1 has advantage, False otherwise."""
-        return self.player1_score > self.player2_score and self.player2_score >= 3
-
-    def _is_player2_has_advantage(self) -> bool:
-        """Returns True if player 2 has advantage, False otherwise."""
-        return self.player2_score > self.player1_score and self.player1_score >= 3
-
-    def _get_player_advantage_result(self, player_name: str) -> str:
-        """Returns the result for the player advantage situation."""
-        return f"Advantage {player_name}"
-
-    def _is_player_win(self) -> bool:
-        """Returns True if a player has won, False otherwise."""
+    def _is_player_going_to_win(self) -> bool:
+        """Returns True if a player is going to win, False otherwise."""
         return self.player1_score >= 4 or self.player2_score >= 4
 
-    def _get_endgame_score(self) -> str:
+    def _check_endgame_score(self) -> str:
         """Returns the score for endgame situations."""
         diff_score = self.player1_score - self.player2_score
         if abs(diff_score) >= 2:
             winner = self.player1_name if diff_score > 0 else self.player2_name
             return f"Win for {winner}"
-
-        # Player with higher score has advantage
-        leader = (
-            self.player1_name
-            if self.player1_score > self.player2_score
-            else self.player2_name
-        )
-        return f"Advantage {leader}"
+        return self._get_regular_score()
 
     def _is_player_at_lead(self) -> bool:
         """Returns True if a player is at lead, False otherwise."""
@@ -97,6 +78,17 @@ class TennisGame2(TennisGameInterface):
     def _get_regular_score(self) -> str:
         """Returns the regular score format."""
         diff_score = self.player1_score - self.player2_score
+
+        # Handle case where Player with higher score has advantage
+        if abs(diff_score) > 0 and self._is_player_going_to_win():
+            leader = (
+                self.player1_name
+                if self.player1_score > self.player2_score
+                else self.player2_name
+            )
+            return f"Advantage {leader}"
+
+        # Handle case where one player is ahead but not by enough to win
         if abs(diff_score) > 0 and self._is_player_at_lead():
             return self._handle_player_at_lead()
 
