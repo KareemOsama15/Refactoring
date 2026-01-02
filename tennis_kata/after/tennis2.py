@@ -154,11 +154,4 @@ class TennisGame2(TennisGameInterface):
             )
             result = player1_result + "-" + player2_result
 
-        # Case 4: Advantage to Player 1 (deuce situation) or Advantage to Player 2 (deuce situation)
-        if self._is_player1_has_advantage():
-            result = self._get_player_advantage_result(self.player1_name)
-
-        if self._is_player2_has_advantage():
-            result = self._get_player_advantage_result(self.player2_name)
-
         return result
