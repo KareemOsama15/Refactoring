@@ -104,8 +104,8 @@ class TennisGame2(TennisGameInterface):
         """Returns the result for the deuce situation."""
         return "Deuce"
 
-    def _is_score_less_than_3(self) -> bool:
-        """Returns True if the score is less than 3, False otherwise."""
+    def _is_score_higher_than_3(self) -> bool:
+        """Returns True if the score is higher than 3, False otherwise."""
         return self.player1_score < 3
 
     def _get_tied_score_result(self, score: int) -> str:
