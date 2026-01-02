@@ -98,18 +98,6 @@ class TennisGame2(TennisGameInterface):
             return "Deuce"
         return self._get_tied_score_result(score)
 
-    def _is_deuce(self) -> bool:
-        """Returns True if the scores are deuce, False otherwise."""
-        return self.player1_score > 2 and self.player1_score == self.player2_score
-
-    def _get_deuce_result(self) -> str:
-        """Returns the result for the deuce situation."""
-        return "Deuce"
-
-    def _is_score_less_than_3(self) -> bool:
-        """Returns True if the score is less than 3, False otherwise."""
-        return self.player1_score < 3
-
     def _get_tied_score_result(self, score: int) -> str:
         """Returns the result for the tied score situation."""
         result = TennisGame2.RESULT_MAP.get(score)
