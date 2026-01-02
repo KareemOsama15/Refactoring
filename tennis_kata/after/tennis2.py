@@ -71,12 +71,9 @@ class TennisGame2(TennisGameInterface):
         if self._is_player2_has_advantage():
             result = self._get_player_advantage_result(self.player2_name)
 
-        # Case 5: Player 1 wins the game (with at least 4 points and 2 points ahead) or Player 2 wins the game (with at least 4 points and 2 points ahead)
-        if self._is_player1_has_win():
-            result = self._get_player_win_result(self.player1_name)
-
-        if self._is_player2_has_win():
-            result = self._get_player_win_result(self.player2_name)
+        # Case 5: A player wins the game (with at least 4 points and 2 points ahead)
+        if self._is_player_win():
+            return self._get_endgame_score()
 
         return result
 
@@ -124,7 +121,9 @@ class TennisGame2(TennisGameInterface):
         self, leading_player_score: int, late_player_score: int
     ) -> tuple[str, str]:
         """Returns the result for the players at lead situation."""
-        player_at_lead_result: str = TennisGame2.RESULT_MAP.get(leading_player_score, "")
+        player_at_lead_result: str = TennisGame2.RESULT_MAP.get(
+            leading_player_score, ""
+        )
         late_player_result: str = TennisGame2.RESULT_MAP.get(late_player_score, "")
         return player_at_lead_result, late_player_result
 
@@ -139,6 +138,21 @@ class TennisGame2(TennisGameInterface):
     def _get_player_advantage_result(self, player_name: str) -> str:
         """Returns the result for the player advantage situation."""
         return f"Advantage {player_name}"
+
+    def _is_player_win(self) -> bool:
+        """Returns True if a player has won, False otherwise."""
+        return self.player1_score >= 4 or self.player2_score >= 4
+
+    def _get_endgame_score(self) -> str:
+        """Returns the score for endgame situations."""
+        diff_score = self.player1_score - self.player2_score
+        if abs(diff_score) >= 2:
+            winner = self.player1_name if diff_score > 0 else self.player2_name
+            return f"Win for {winner}"
+        
+        # Player with higher score has advantage
+        leader = self.player1_name if self.player1_score > self.player2_score else self.player2_name
+        return f"Advantage {leader}"
 
     def _is_player1_has_win(self) -> bool:
         """Returns True if player 1 has win, False otherwise."""
