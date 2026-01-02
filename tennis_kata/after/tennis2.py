@@ -59,38 +59,6 @@ class TennisGame2(TennisGameInterface):
             return "Deuce"
         return TennisGame2.RESULT_MAP.get(score) + "-All"
 
-    def _is_player1_scoring_and_player2_at_love(self) -> bool:
-        """Returns True if player 1 is scoring and player 2 is at love, False otherwise."""
-        return self.player1_score > 0 and self.player2_score == 0
-
-    def _is_player2_scoring_and_player1_at_love(self) -> bool:
-        """Returns True if player 2 is scoring and player 1 is at love, False otherwise."""
-        return self.player2_score > 0 and self.player1_score == 0
-
-    def _get_result_for_players_scoring(self, player_score: int) -> tuple[str, str]:
-        """Returns the result for the players scoring situation."""
-        leading_player_result: str = TennisGame2.RESULT_MAP.get(player_score, "")
-        trailing_player_result: str = "Love"
-        return leading_player_result, trailing_player_result
-
-    def _is_player1_at_lead(self) -> bool:
-        """Returns True if player 1 is leading, False otherwise."""
-        return self.player1_score > self.player2_score and self.player1_score < 4
-
-    def _is_player2_at_lead(self) -> bool:
-        """Returns True if player 2 is leading, False otherwise."""
-        return self.player2_score > self.player1_score and self.player2_score < 4
-
-    def _get_result_for_players_at_lead(
-        self, leading_player_score: int, late_player_score: int
-    ) -> tuple[str, str]:
-        """Returns the result for the players at lead situation."""
-        player_at_lead_result: str = TennisGame2.RESULT_MAP.get(
-            leading_player_score, ""
-        )
-        late_player_result: str = TennisGame2.RESULT_MAP.get(late_player_score, "")
-        return player_at_lead_result, late_player_result
-
     def _is_player1_has_advantage(self) -> bool:
         """Returns True if player 1 has advantage, False otherwise."""
         return self.player1_score > self.player2_score and self.player2_score >= 3
