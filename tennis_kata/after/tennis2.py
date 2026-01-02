@@ -2,15 +2,15 @@ from .tennis_interface import TennisGameInterface
 from typing import Dict, Callable
 
 
-RESULT_MAP = {
-    0: "Love",
-    1: "Fifteen",
-    2: "Thirty",
-    3: "Forty",
-}
-
-
 class TennisGame2(TennisGameInterface):
+
+    RESULT_MAP = {
+        0: "Love",
+        1: "Fifteen",
+        2: "Thirty",
+        3: "Forty",
+    }
+
     def __init__(self, player1_name, player2_name):
         super().__init__(player1_name, player2_name)
 
@@ -110,7 +110,7 @@ class TennisGame2(TennisGameInterface):
 
     def _get_tied_score_result(self, score: int) -> str:
         """Returns the result for the tied score situation."""
-        result = RESULT_MAP.get(score)
+        result = TennisGame2.RESULT_MAP.get(score)
         return result + "-All"
 
     def _is_player1_scoring_and_player2_at_love(self) -> bool:
@@ -123,7 +123,7 @@ class TennisGame2(TennisGameInterface):
 
     def _get_result_for_players_scoring(self, player_score: int) -> tuple[str, str]:
         """Returns the result for the players scoring situation."""
-        leading_player_result: str = RESULT_MAP.get(player_score, "")
+        leading_player_result: str = TennisGame2.RESULT_MAP.get(player_score, "")
         trailing_player_result: str = "Love"
         return leading_player_result, trailing_player_result
 
@@ -139,8 +139,8 @@ class TennisGame2(TennisGameInterface):
         self, leading_player_score: int, late_player_score: int
     ) -> tuple[str, str]:
         """Returns the result for the players at lead situation."""
-        player_at_lead_result: str = RESULT_MAP.get(leading_player_score, "")
-        late_player_result: str = RESULT_MAP.get(late_player_score, "")
+        player_at_lead_result: str = TennisGame2.RESULT_MAP.get(leading_player_score, "")
+        late_player_result: str = TennisGame2.RESULT_MAP.get(late_player_score, "")
         return player_at_lead_result, late_player_result
 
     def _is_player1_has_advantage(self) -> bool:
