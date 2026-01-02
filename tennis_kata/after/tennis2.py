@@ -122,25 +122,6 @@ class TennisGame2(TennisGameInterface):
         )
         return f"Advantage {leader}"
 
-    def _is_player1_has_win(self) -> bool:
-        """Returns True if player 1 has win, False otherwise."""
-        return (
-            self.player1_score >= 4
-            and self.player2_score >= 0
-            and (self.player1_score - self.player2_score) >= 2
-        )
-
-    def _is_player2_has_win(self) -> bool:
-        return (
-            self.player2_score >= 4
-            and self.player1_score >= 0
-            and (self.player2_score - self.player1_score) >= 2
-        )
-
-    def _get_player_win_result(self, player_name: str) -> str:
-        """Returns the result for the player win situation."""
-        return f"Win for {player_name}"
-
     def _get_regular_score(self) -> str:
         """Returns the regular score format."""
         player1_result = ""
