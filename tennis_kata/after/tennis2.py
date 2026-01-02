@@ -124,34 +124,11 @@ class TennisGame2(TennisGameInterface):
 
     def _get_regular_score(self) -> str:
         """Returns the regular score format."""
-        player1_result = ""
-        player2_result = ""
-        result = ""
+        diff_score = self.player1_score - self.player2_score
+        if abs(diff_score) > 0 and (self.player1_score < 4 or self.player2_score < 4):
+            return self._handle_player_at_lead()
 
-        # Case 2: Player 1 is scoring, Player 2 at Love (0) or Player 2 is scoring, Player 1 at Love (0)
-        if self._is_player1_scoring_and_player2_at_love():
-            player1_result, player2_result = self._get_result_for_players_scoring(
-                self.player1_score
-            )
-            result = player1_result + "-" + player2_result
-
-        if self._is_player2_scoring_and_player1_at_love():
-            player2_result, player1_result = self._get_result_for_players_scoring(
-                self.player2_score
-            )
-            result = player2_result + "-" + player1_result
-
-        # Case 3: Both players have scored, Player 1 is leading but no one has won yet or Player 2 is leading but no one has won yet
-        if self._is_player1_at_lead():
-            player1_result, player2_result = self._get_result_for_players_at_lead(
-                self.player1_score, self.player2_score
-            )
-            result = player1_result + "-" + player2_result
-
-        if self._is_player2_at_lead():
-            player1_result, player2_result = self._get_result_for_players_at_lead(
-                self.player1_score, self.player2_score
-            )
-            result = player1_result + "-" + player2_result
-
-        return result
+    def _handle_player_at_lead(self) -> str:
+        player1_score_result = TennisGame2.RESULT_MAP.get(self.player1_score, "")
+        player2_score_result = TennisGame2.RESULT_MAP.get(self.player2_score, "")
+        return f"{player1_score_result}-{player2_score_result}"
