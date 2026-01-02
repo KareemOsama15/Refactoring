@@ -34,10 +34,11 @@ class TennisGame2(TennisGameInterface):
         if self._are_players_tied():
             return self._handle_tied_scores(self.player1_score)
 
-        # Case 5: A player wins the game (with at least 4 points and 2 points ahead)
+        # Case 2: A player has won (at least 4 points and 2 points ahead)
         if self._is_player_win():
             return self._get_endgame_score()
 
+        # Case 3: Regular scoring (neither player has won yet)
         return self._get_regular_score()
 
     def _increase_player1_score(self):
