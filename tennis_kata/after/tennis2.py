@@ -98,11 +98,6 @@ class TennisGame2(TennisGameInterface):
             return "Deuce"
         return TennisGame2.RESULT_MAP.get(score) + "-All"
 
-    def _get_tied_score_result(self, score: int) -> str:
-        """Returns the result for the tied score situation."""
-        result = TennisGame2.RESULT_MAP.get(score)
-        return result + "-All"
-
     def _is_player1_scoring_and_player2_at_love(self) -> bool:
         """Returns True if player 1 is scoring and player 2 is at love, False otherwise."""
         return self.player1_score > 0 and self.player2_score == 0
