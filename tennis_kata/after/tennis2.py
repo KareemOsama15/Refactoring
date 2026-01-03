@@ -74,14 +74,12 @@ class TennisGame2(TennisGameInterface):
         if abs(diff_score) >= 2:
             winner = self.player1_name if diff_score > 0 else self.player2_name
             return f"Win for {winner}"
-        return self._get_regular_score()
+        return self._get_advantage_score(diff_score)
 
-    def _get_regular_score(self) -> str:
-        """Returns the regular score format."""
-        diff_score = self.player1_score - self.player2_score
-
+    def _get_advantage_score(self, diff_score: int) -> str:
+        """Returns the score when a player has advantage."""
         # Handle case where Player with higher score has advantage (4 points or more but 1 point ahead)
-        if abs(diff_score) > 0 and self._is_player_has_advantage():
+        if abs(diff_score) == 1:
             leader = (
                 self.player1_name
                 if self.player1_score > self.player2_score
@@ -89,6 +87,9 @@ class TennisGame2(TennisGameInterface):
             )
             return f"Advantage {leader}"
 
+    def _get_regular_score(self) -> str:
+        """Returns the regular score format."""
+        diff_score = self.player1_score - self.player2_score
         # Handle case where one player is ahead but not have 4 points
         if abs(diff_score) > 0 and self._is_player_at_lead():
             player1_score_result = TennisGame2.RESULT_MAP.get(self.player1_score, "")
