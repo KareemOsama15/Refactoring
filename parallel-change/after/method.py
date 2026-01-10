@@ -12,6 +12,8 @@ class AuthenticationService:
     def is_authenticated_refactored(self, role: str = "", id: int = 0) -> bool:
         if role not in self.ROLES:
             raise ValueError("Invalid role")
+        if not isinstance(id, int) or id <= 0:
+            raise ValueError("Invalid id")
         return id == 12345
 
 

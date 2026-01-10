@@ -28,6 +28,21 @@ class AuthenticatorTests(unittest.TestCase):
         service = method.AuthenticationService()
         self.assertFalse(service.is_authenticated_refactored("user", 11111))
 
+    def test_id_is_not_int(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated_refactored("admin", "12345")
+
+    def test_id_is_negative(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated_refactored("admin", -12345)
+
+    def test_id_is_zero(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated_refactored("admin", 0)
+
 
 class ShoppingCartTests(unittest.TestCase):
 
