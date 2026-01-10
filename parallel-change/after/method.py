@@ -23,12 +23,18 @@ class AuthenticationClient:
 
     def run(self):
         authenticated = self.authenticationService.is_authenticated(33)
+        authenticated_refactored = (
+            self.authenticationService.is_authenticated_refactored("admin", 12345)
+        )
         print("is authenticated: ", str(authenticated))
+        print("is authenticated refactored: ", str(authenticated_refactored))
+
 
 
 class YetAnotherClient:
     def run(self):
         AuthenticationService().is_authenticated(100)
+        AuthenticationService().is_authenticated_refactored("admin", 12345)
 
 if __name__ == "__main__":
     client = AuthenticationClient(AuthenticationService())
