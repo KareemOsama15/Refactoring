@@ -5,43 +5,33 @@ import field
 
 class AuthenticatorTests(unittest.TestCase):
 
-    def test_administrator_is_always_authenticated(self):
-        service = method.AuthenticationService()
-        adminId = 12345
-        self.assertTrue(service.is_authenticated(adminId))
-
-    def test_normal_user_is_not_authenticated_initially(self):
-        service = method.AuthenticationService()
-        normalUserId = 11111
-        self.assertFalse(service.is_authenticated(normalUserId))
-
     def test_role_is_required(self):
         service = method.AuthenticationService()
         with self.assertRaises(ValueError, msg="Invalid role"):
-            service.is_authenticated_refactored("", 12345)
+            service.is_authenticated("", 12345)
 
     def test_role_is_valid_and_id_is_correct(self):
         service = method.AuthenticationService()
-        self.assertTrue(service.is_authenticated_refactored("admin", 12345))
+        self.assertTrue(service.is_authenticated("admin", 12345))
 
     def test_role_is_valid_and_id_is_incorrect(self):
         service = method.AuthenticationService()
-        self.assertFalse(service.is_authenticated_refactored("user", 11111))
+        self.assertFalse(service.is_authenticated("user", 11111))
 
     def test_id_is_not_int(self):
         service = method.AuthenticationService()
         with self.assertRaises(ValueError, msg="Invalid id"):
-            service.is_authenticated_refactored("admin", "12345")
+            service.is_authenticated("admin", "12345")
 
     def test_id_is_negative(self):
         service = method.AuthenticationService()
         with self.assertRaises(ValueError, msg="Invalid id"):
-            service.is_authenticated_refactored("admin", -12345)
+            service.is_authenticated("admin", -12345)
 
     def test_id_is_zero(self):
         service = method.AuthenticationService()
         with self.assertRaises(ValueError, msg="Invalid id"):
-            service.is_authenticated_refactored("admin", 0)
+            service.is_authenticated("admin", 0)
 
 
 class ShoppingCartTests(unittest.TestCase):
