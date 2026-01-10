@@ -15,6 +15,19 @@ class AuthenticatorTests(unittest.TestCase):
         normalUserId = 11111
         self.assertFalse(service.is_authenticated(normalUserId))
 
+    def test_role_is_required(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid role"):
+            service.is_authenticated_refactored("", 12345)
+
+    def test_role_is_valid_and_id_is_correct(self):
+        service = method.AuthenticationService()
+        self.assertTrue(service.is_authenticated_refactored("admin", 12345))
+
+    def test_role_is_valid_and_id_is_incorrect(self):
+        service = method.AuthenticationService()
+        self.assertFalse(service.is_authenticated_refactored("user", 11111))
+
 
 class ShoppingCartTests(unittest.TestCase):
 
