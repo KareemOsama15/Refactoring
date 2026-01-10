@@ -38,7 +38,7 @@ class ShoppingCartTests(unittest.TestCase):
         shoppingCart.add(10)
         self.assertFalse(shoppingCart.has_discount())
 
-    def test_has_discount_when_contains_at_least_one_premium_item(self):
+    def test_has_discount_when_contains_sum_of_multiple_premium_items(self):
         shoppingCart = field.ShoppingCart()
         shoppingCart.add(90)
         self.assertFalse(shoppingCart.has_discount())
