@@ -11,9 +11,9 @@ class ShoppingCart:
 
     def add(self, price):
         self.price = price
+        self.prices = [price]
 
     def calculate_total_price(self):
-        self.price = sum(self.prices)
         return self.price
 
     def has_discount(self):
