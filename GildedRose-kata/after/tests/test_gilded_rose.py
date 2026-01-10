@@ -19,24 +19,53 @@ class ItemTest(unittest.TestCase):
         self.assertEqual("Aged Brie", item.name)
 
     def test_item_quality_is_negative(self):
-        item = Item("Aged Brie", 2, -1)
         with self.assertRaises(ValueError, msg="Quality cannot be negative"):
-            item.quality = -1
+            item = Item("Aged Brie", 2, -1)
+
+    def test_item_quality_is_50(self):
+        item = Item("Aged Brie", 2, 50)
+        with self.assertRaises(ValueError, msg="Quality cannot be greater than 50"):
+            item.quality = 51
+
+    def test_sulfras_quality_more_than_50(self):
+        item = Item("Sulfuras, Hand of Ragnaros", 0, 80)
+        self.assertEqual(80, item.quality)
+
+    def test_item_quality_more_than_50_in_instantiation(self):
+        with self.assertRaises(ValueError, msg="Quality cannot be greater than 50"):
+            item = Item("Aged Brie", 2, 51)
+
+    def test_normal_item_quality_more_than_50(self):
+        item = Item("Elixir of the Mongoose", 2, 50)
+        with self.assertRaises(ValueError, msg="Quality cannot be greater than 50"):
+            item.quality = 55
 
 
 class GildedRoseTest(unittest.TestCase):
 
-    def test_aged_brie_quality(self):
+    def test_aged_brie_quality_decreased_by_1(self):
         items = [Item("Aged Brie", 2, 0)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(1, items[0].quality)
 
-    def test_sulfuras_quality(self):
+    def test_aged_brie_sell_in_decreased_by_1(self):
+        items = [Item("Aged Brie", 2, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(1, items[0].sell_in)
+
+    def test_sulfuras_quality_not_changed(self):
         items = [Item("Sulfuras, Hand of Ragnaros", 0, 80)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(80, items[0].quality)
+
+    def test_sulfuras_sell_in_not_changed(self):
+        items = [Item("Sulfuras, Hand of Ragnaros", 5, 80)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(5, items[0].sell_in)
 
     def test_backstage_passes_quality_increased_by_1(self):
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 15, 20)]
@@ -68,11 +97,23 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
 
+    def test_backstage_passes_sell_in_decreased_by_1(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 20)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(4, items[0].sell_in)
+
     def test_normal_item_quality_decreased_by_1(self):
         items = [Item("Elixir of the Mongoose", 2, 10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(9, items[0].quality)
+
+    def test_normal_item_sell_in_decreased_by_1(self):
+        items = [Item("Elixir of the Mongoose", 2, 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(1, items[0].sell_in)
 
 
 if __name__ == "__main__":
