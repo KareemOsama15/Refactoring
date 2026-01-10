@@ -1,5 +1,4 @@
 class ShoppingCart:
-    price = 0
 
     '''
     the goal is to remove the field above, using a list of prices instead:
@@ -7,6 +6,7 @@ class ShoppingCart:
         self.prices = []
     '''
     def __init__(self) -> None:
+        self.price = 0
         self.prices = []
 
     def add(self, price):
