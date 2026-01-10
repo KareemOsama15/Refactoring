@@ -58,6 +58,11 @@ class ShoppingCartTests(unittest.TestCase):
         shoppingCart.add_item(20)
         self.assertEqual(2, shoppingCart.number_of_products())
 
+    def test_negative_price_is_not_allowed(self):
+        shoppingCart = field.ShoppingCart()
+        with self.assertRaises(ValueError, msg="Price cannot be negative"):
+            shoppingCart.add_item(-10)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,7 +14,8 @@ class ShoppingCart:
         self.prices = [price]
 
     def add_item(self, price):
-        self.price = price
+        if price < 0:
+            raise ValueError("Price cannot be negative")
         self.prices.append(price)
 
     def calculate_total_price(self):
