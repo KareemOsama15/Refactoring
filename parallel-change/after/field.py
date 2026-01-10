@@ -6,6 +6,8 @@ class ShoppingCart:
     def __init__(self):
         self.prices = []
     '''
+    def __init__(self) -> None:
+        self.prices = []
 
     def add(self, price):
         self.price = price
