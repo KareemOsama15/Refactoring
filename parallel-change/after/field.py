@@ -13,8 +13,15 @@ class ShoppingCart:
         self.price = price
         self.prices = [price]
 
+    def add_item(self, price):
+        self.price = price
+        self.prices.append(price)
+
     def calculate_total_price(self):
-        return self.price
+        if isinstance(self.price, list):
+            return sum(self.prices)
+        else:
+            return self.price
 
     def has_discount(self):
         return self.price >= 100
@@ -32,7 +39,8 @@ class SomeConsumer():
 
 if __name__ == "__main__":
     shoppingCart = ShoppingCart()
-    shoppingCart.add(10)
+    # shoppingCart.add(10)
+    shoppingCart.add_item(20)
     print("number of products:", shoppingCart.number_of_products())
     print("total price:", shoppingCart.calculate_total_price())
     print("has discount:", shoppingCart.has_discount())
