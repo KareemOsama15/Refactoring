@@ -5,15 +5,33 @@ import field
 
 class AuthenticatorTests(unittest.TestCase):
 
-    def test_administrator_is_always_authenticated(self):
+    def test_role_is_required(self):
         service = method.AuthenticationService()
-        adminId = 12345
-        self.assertTrue(service.is_authenticated(adminId))
+        with self.assertRaises(ValueError, msg="Invalid role"):
+            service.is_authenticated("", 12345)
 
-    def test_normal_user_is_not_authenticated_initially(self):
+    def test_role_is_valid_and_id_is_correct(self):
         service = method.AuthenticationService()
-        normalUserId = 11111
-        self.assertFalse(service.is_authenticated(normalUserId))
+        self.assertTrue(service.is_authenticated("admin", 12345))
+
+    def test_role_is_valid_and_id_is_incorrect(self):
+        service = method.AuthenticationService()
+        self.assertFalse(service.is_authenticated("user", 11111))
+
+    def test_id_is_not_int(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated("admin", "12345")
+
+    def test_id_is_negative(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated("admin", -12345)
+
+    def test_id_is_zero(self):
+        service = method.AuthenticationService()
+        with self.assertRaises(ValueError, msg="Invalid id"):
+            service.is_authenticated("admin", 0)
 
 
 class ShoppingCartTests(unittest.TestCase):
@@ -37,6 +55,31 @@ class ShoppingCartTests(unittest.TestCase):
         shoppingCart = field.ShoppingCart()
         shoppingCart.add(10)
         self.assertFalse(shoppingCart.has_discount())
+
+    def test_has_discount_when_contains_sum_of_multiple_premium_items(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add(90)
+        self.assertFalse(shoppingCart.has_discount())
+        shoppingCart.add(10)
+        self.assertTrue(shoppingCart.has_discount())
+
+    def test_claculate_total_price(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add(10)
+        self.assertEqual(10, shoppingCart.calculate_total_price())
+        shoppingCart.add(20)
+        self.assertEqual(30, shoppingCart.calculate_total_price())
+
+    def test_number_of_products_is_correct_when_multiple_items(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add(10)
+        shoppingCart.add(20)
+        self.assertEqual(2, shoppingCart.number_of_products())
+
+    def test_negative_price_is_not_allowed(self):
+        shoppingCart = field.ShoppingCart()
+        with self.assertRaises(ValueError, msg="Price cannot be negative"):
+            shoppingCart.add(-10)
 
 
 if __name__ == "__main__":

@@ -1,26 +1,29 @@
 class ShoppingCart:
-    price = 0
-
-    '''
+    """
     the goal is to remove the field above, using a list of prices instead:
     def __init__(self):
         self.prices = []
-    '''
+    """
 
-    def add(self, price):
-        self.price = price
+    def __init__(self) -> None:
+        self.prices = []
 
-    def calculate_total_price(self):
-        return self.price
+    def add(self, price) -> None:
+        if price < 0:
+            raise ValueError("Price cannot be negative")
+        self.prices.append(price)
 
-    def has_discount(self):
-        return self.price >= 100
+    def calculate_total_price(self) -> int:
+        return sum(self.prices)
 
-    def number_of_products(self):
-        return 1
+    def has_discount(self) -> bool:
+        return sum(self.prices) >= 100
+
+    def number_of_products(self) -> int:
+        return len(self.prices)
 
 
-class SomeConsumer():
+class SomeConsumer:
     def do_stuff():
         shoppingCart = ShoppingCart()
         shoppingCart.add(100)
@@ -29,7 +32,8 @@ class SomeConsumer():
 
 if __name__ == "__main__":
     shoppingCart = ShoppingCart()
-    shoppingCart.add(10)
+    shoppingCart.add(90)
+    shoppingCart.add(20)
     print("number of products:", shoppingCart.number_of_products())
     print("total price:", shoppingCart.calculate_total_price())
     print("has discount:", shoppingCart.has_discount())
