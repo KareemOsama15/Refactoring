@@ -38,6 +38,26 @@ class ShoppingCartTests(unittest.TestCase):
         shoppingCart.add(10)
         self.assertFalse(shoppingCart.has_discount())
 
+    def test_has_discount_when_contains_at_least_one_premium_item(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add_item(90)
+        self.assertFalse(shoppingCart.has_discount())
+        shoppingCart.add_item(10)
+        self.assertTrue(shoppingCart.has_discount())
+
+    def test_claculate_total_price(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add_item(10)
+        self.assertEqual(10, shoppingCart.calculate_total_price())
+        shoppingCart.add_item(20)
+        self.assertEqual(30, shoppingCart.calculate_total_price())
+
+    def test_number_of_products_is_correct_when_multiple_items(self):
+        shoppingCart = field.ShoppingCart()
+        shoppingCart.add_item(10)
+        shoppingCart.add_item(20)
+        self.assertEqual(2, shoppingCart.number_of_products())
+
 
 if __name__ == "__main__":
     unittest.main()
