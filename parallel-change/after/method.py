@@ -9,6 +9,11 @@ class AuthenticationService:
     def is_authenticated(self, id):
         return id == 12345
 
+    def is_authenticated_refactored(self, role: str = "", id: int = 0) -> bool:
+        if role not in self.ROLES:
+            raise ValueError("Invalid role")
+        return id == 12345
+
 
 class AuthenticationClient:
     def __init__(self, authenticationService: AuthenticationService):
