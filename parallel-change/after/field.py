@@ -10,7 +10,8 @@ class ShoppingCart:
         self.prices = []
 
     def add(self, price):
-        self.price = price
+        self.prices.append(price)
+        self.price = sum(self.prices)
 
     def calculate_total_price(self):
         return self.price
