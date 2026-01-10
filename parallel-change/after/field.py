@@ -6,32 +6,21 @@ class ShoppingCart:
     """
 
     def __init__(self) -> None:
-        self.price = 0
         self.prices = []
 
-    def add(self, price):
-        self.price = price
-        self.prices = [price]
-
-    def add_item(self, price):
+    def add(self, price) -> None:
         if price < 0:
             raise ValueError("Price cannot be negative")
         self.prices.append(price)
 
-    def calculate_total_price(self):
-        if self.prices:
-            return sum(self.prices)
-        return self.price
+    def calculate_total_price(self) -> int:
+        return sum(self.prices)
 
-    def has_discount(self):
-        if self.prices:
-            return sum(self.prices) >= 100
-        return self.price >= 100
+    def has_discount(self) -> bool:
+        return sum(self.prices) >= 100
 
-    def number_of_products(self):
-        if self.prices:
-            return len(self.prices)
-        return 1
+    def number_of_products(self) -> int:
+        return len(self.prices)
 
 
 class SomeConsumer:
@@ -43,9 +32,8 @@ class SomeConsumer:
 
 if __name__ == "__main__":
     shoppingCart = ShoppingCart()
-    # shoppingCart.add(10)
-    shoppingCart.add_item(20)
-    shoppingCart.add_item(100)
+    shoppingCart.add(90)
+    shoppingCart.add(20)
     print("number of products:", shoppingCart.number_of_products())
     print("total price:", shoppingCart.calculate_total_price())
     print("has discount:", shoppingCart.has_discount())
