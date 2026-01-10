@@ -20,10 +20,11 @@ class ShoppingCart:
     def calculate_total_price(self):
         if isinstance(self.price, list):
             return sum(self.prices)
-        else:
-            return self.price
+        return self.price
 
     def has_discount(self):
+        if isinstance(self.price, list):
+            return sum(self.prices) >= 100
         return self.price >= 100
 
     def number_of_products(self):
