@@ -90,6 +90,24 @@ class BackstagePassesUpdater(ItemUpdaterInterface):
         item.sell_in -= 1
 
 
+class StandardItemsUpdater(ItemUpdaterInterface):
+    """Normal item updater class."""
+
+    def update(self, item: Item) -> None:
+        """Update the quality of the item."""
+        self._update_sell_in(item)
+        self._update_quality(item)
+
+    def _update_quality(self, item: Item) -> None:
+        """Update the quality of the item."""
+        if item.quality > 0:
+            item.quality -= 1
+
+    def _update_sell_in(self, item: Item) -> None:
+        """Update the sell_in of the item."""
+        item.sell_in -= 1
+
+
 class GildedRose(object):
     """Gilded Rose class."""
 
@@ -111,32 +129,5 @@ class GildedRose(object):
             updater = self.updaters.get(item.name)
             if updater:
                 updater.update(item)
-                continue
-
-            if (
-                item.name != "Aged Brie"
-                and item.name != "Backstage passes to a TAFKAL80ETC concert"
-            ):
-                if item.quality > 0:
-                    item.quality = item.quality - 1
             else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-            item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.quality > 0:
-                            item.quality = item.quality - 1
-                    else:
-                        item.quality = item.quality - item.quality
-                else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
+                StandardItemsUpdater().update(item)
