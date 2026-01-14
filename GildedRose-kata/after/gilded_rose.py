@@ -108,6 +108,26 @@ class StandardItemsUpdater(ItemUpdaterInterface):
         item.sell_in -= 1
 
 
+class ConjuredUpdater(ItemUpdaterInterface):
+    """Conjured item updater class."""
+
+    def update(self, item: Item) -> None:
+        self._update_sell_in(item)
+        self._update_quality(item)
+
+    def _update_quality(self, item: Item) -> None:
+        """Update the quality of the item."""
+        if item.sell_in <= 0:
+            item.quality -= 4
+
+        elif item.quality > 0:
+            item.quality -= 2
+
+    def _update_sell_in(self, item: Item) -> None:
+        """Update the sell_in of the item."""
+        item.sell_in -= 1
+
+
 class GildedRose(object):
     """Gilded Rose class."""
 
@@ -118,6 +138,7 @@ class GildedRose(object):
             "Sulfuras, Hand of Ragnaros": SulfurasUpdater(),
             "Aged Brie": AgedBrieUpdater(),
             "Backstage passes to a TAFKAL80ETC concert": BackstagePassesUpdater(),
+            "Conjured Mana Cake": ConjuredUpdater(),
         }
 
     def update_quality(self) -> None:
