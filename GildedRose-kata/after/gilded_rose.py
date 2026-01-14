@@ -36,12 +36,32 @@ class ItemUpdaterInterface(ABC):
         """Update the quality or sell_in of the item."""
         raise NotImplementedError("Subclasses must implement this method")
 
+
 class SulfurasUpdater(ItemUpdaterInterface):
     """Sulfuras, Hand of Ragnaros updater class."""
 
     def update(self, item: Item) -> None:
         """Update the quality of the item."""
         pass
+
+
+class AgedBrieUpdater(ItemUpdaterInterface):
+    """Aged Brie updater class."""
+
+    def update(self, item: Item) -> None:
+        """Update the quality of the item."""
+        self._update_sell_in(item)
+        self._update_quality(item)
+    
+    def _update_quality(self, item: Item) -> None:
+        """Update the quality of the item."""
+        if item.quality < 50:
+            item.quality += 1
+    
+    def _update_sell_in(self, item: Item) -> None:
+        """Update the sell_in of the item."""
+        item.sell_in -= 1
+
 
 class GildedRose(object):
     """Gilded Rose class."""
@@ -51,6 +71,7 @@ class GildedRose(object):
         self.items: List[Item] = items
         self.updaters: Dict[str, ItemUpdaterInterface] = {
             "Sulfuras, Hand of Ragnaros": SulfurasUpdater(),
+            "Aged Brie": AgedBrieUpdater(),
         }
 
     def update_quality(self) -> None:
