@@ -1,16 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import List, Dict
-from abc import ABC, abstractmethod
 from item import Item
-
-
-class ItemUpdaterInterface(ABC):
-    """Item updater interface."""
-
-    @abstractmethod
-    def update(self, item: Item) -> None:
-        """Update the quality or sell_in of the item."""
-        raise NotImplementedError("Subclasses must implement this method")
+from item_update_interface import ItemUpdaterInterface
 
 
 class SulfurasUpdater(ItemUpdaterInterface):
