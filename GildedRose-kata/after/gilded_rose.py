@@ -100,7 +100,9 @@ class StandardItemsUpdater(ItemUpdaterInterface):
 
     def _update_quality(self, item: Item) -> None:
         """Update the quality of the item."""
-        if item.quality > 0:
+        if item.sell_in <= 0:
+            item.quality -= 2
+        elif item.quality > 0:
             item.quality -= 1
 
     def _update_sell_in(self, item: Item) -> None:
@@ -145,7 +147,6 @@ class GildedRose(object):
         """
         Update the quality of the items.
         """
-
         for item in self.items:
             updater = self.updaters.get(item.name)
             if updater:

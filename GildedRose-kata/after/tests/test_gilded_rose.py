@@ -133,6 +133,12 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(1, items[0].sell_in)
 
+    def test_standard_items_quality_decreased_by_1_when_sell_in_is_0(self):
+        items = [Item("Elixir of the Mongoose", 0, 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(8, items[0].quality)
+
     def test_conjured_quality_decreased_by_2(self):
         items = [Item("Conjured Mana Cake", 2, 10)]
         gilded_rose = GildedRose(items)
