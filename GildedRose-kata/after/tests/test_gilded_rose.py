@@ -122,6 +122,18 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(50, items[0].quality)
 
+    def test_backstage_passes_quality_equal_to_49_and_sell_in_less_than_5(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 49)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
+    def test_backstage_passes_quality_equal_to_49_and_sell_in_less_than_10(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 49)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
     def test_standard_items_quality_decreased_by_1(self):
         items = [Item("Elixir of the Mongoose", 2, 10)]
         gilded_rose = GildedRose(items)
