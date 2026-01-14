@@ -55,6 +55,18 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(1, items[0].sell_in)
 
+    def test_aged_brie_quality_equal_to_50(self):
+        items = [Item("Aged Brie", 2, 50)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
+    def test_aged_brie_quality_when_sell_in_less_than_0(self):
+        items = [Item("Aged Brie", -1, 49)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
+
     def test_sulfuras_quality_not_changed(self):
         items = [Item("Sulfuras, Hand of Ragnaros", 0, 80)]
         gilded_rose = GildedRose(items)
@@ -102,6 +114,12 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(4, items[0].sell_in)
+
+    def test_backstage_passes_quality_equal_to_50(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 50)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(50, items[0].quality)
 
     def test_normal_item_quality_decreased_by_1(self):
         items = [Item("Elixir of the Mongoose", 2, 10)]
